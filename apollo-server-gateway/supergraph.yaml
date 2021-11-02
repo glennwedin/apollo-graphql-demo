@@ -1,0 +1,9 @@
+subgraphs:
+  getUser:
+    routing_url: http://localhost:3001
+    schema:
+      subgraph_url: http://localhost:3001
+  #getUser2:
+  #  routing_url: http://localhost:3002
+  #  schema:
+  #    subgraph_url: http://localhost:3002
