@@ -33,13 +33,26 @@ input Input {
   username: String
 }
 
+type Post {
+  author: String
+  created: String
+  id: ID!
+  title: String
+}
+
 type Query {
+  getPost(id: Int): Post @join__field(graph: GETPOSTS)
+  getPosts: [Post] @join__field(graph: GETPOSTS)
   getUser(input: Input!): User @join__field(graph: GETUSER)
 }
 
-type User @join__owner(graph: GETUSER) @join__type(graph: GETUSER, key: "id") {
+type User
+  @join__owner(graph: GETUSER)
+  @join__type(graph: GETUSER, key: "id")
+  @join__type(graph: GETUSER2, key: "id") {
   age: Int @join__field(graph: GETUSER)
   extra: ExtraUserInfo @join__field(graph: GETUSER)
+  fnr: String @join__field(graph: GETUSER2)
   id: ID! @join__field(graph: GETUSER)
   mail: String @join__field(graph: GETUSER)
   name: String @join__field(graph: GETUSER)
@@ -61,5 +74,7 @@ enum core__Purpose {
 scalar join__FieldSet
 
 enum join__Graph {
+  GETPOSTS @join__graph(name: "getPosts", url: "http://localhost:4005")
   GETUSER @join__graph(name: "getUser", url: "http://localhost:3001")
+  GETUSER2 @join__graph(name: "getUser2", url: "http://localhost:3002")
 }
